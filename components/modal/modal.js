@@ -1,5 +1,3 @@
-// components/Modal.js
-
 import React from 'react';
 import { 
   View, 
@@ -14,7 +12,11 @@ import { IconButton, Portal } from 'react-native-paper';
 import ButtonOriginal from '../buttons/buttonOriginal';
 
 const Modal = ({ visible, onClose, children }) => {
-    if (!visible)
+if (!visible) {
+  // If the modal is not visible, return false to prevent rendering anything
+  // (not null to prevent system crash).
+  return false;
+}
 
   return (
     <KeyboardAvoidingView
@@ -24,6 +26,7 @@ const Modal = ({ visible, onClose, children }) => {
       style={styles.container}
     >
       <Portal>
+          {/* Close Button dismisses the modal when clicked outside of modal. */}
           <ButtonOriginal 
             buttonStyle={{ flex: 1, activeOpacity: 1 }}
             onPress={onClose}
@@ -33,19 +36,21 @@ const Modal = ({ visible, onClose, children }) => {
                 style={styles.modal} 
                 contentContainerStyle={{ flexGrow: 1 }}
               >
+                {/* Close Icon Button */}
                 <ButtonOriginal 
                   buttonStyle={{ flex: 1, activeOpacity: 1 }}  
                   onPress={() => {}}
                 >
-                    <IconButton
-                        icon="close-circle"
-                        style={{ alignSelf:"flex-end" }}
-                        iconColor={color.danger}
-                        size={40}
-                        onPress={onClose}
-                    />
-                    {children}
+                  <IconButton
+                      icon="close-circle"
+                      style={{ alignSelf: "flex-end" }}
+                      iconColor={color.danger}
+                      size={40}
+                      onPress={onClose}
+                  />
+                  {children}
                 </ButtonOriginal>
+                {/* Save Button */}
                 <ButtonOriginal 
                   buttonStyle={{ 
                     backgroundColor: color.mainColor, 

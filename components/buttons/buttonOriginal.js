@@ -9,23 +9,22 @@ import { color } from "../../styles/color";
 const width = Dimensions.get('window').width;
 
 const ButtonOriginal = ({ children, title, onPress, buttonStyle, textStyle }) => {
-
+  
   return (
     <TouchableOpacity
       activeOpacity={0.8}
       style={[styles.button, buttonStyle]}
       onPress={onPress}
     >
-      { children ? 
-        children :(
-        <Text 
-          style={[styles.buttonText, textStyle]} 
-          numberOfLines={2}
-        >
+       {children ? (
+        // If Button has children, display them
+        children
+      ) : (
+        // Otherwise, display a Text component with the specified title
+        <Text style={[styles.buttonText, textStyle]}>
           {title}
         </Text>
-      )
-      }
+      )}
     </TouchableOpacity>
   );
 };
