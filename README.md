@@ -4,11 +4,11 @@ This project provides a modal for integrating a specific component into another 
 
 <h2>Features</h2>
 
-**Quick Integration:** Seamlessly integrate this component into your Android and iOS mobile applications.
+**Quick Integration:** Easily integrate this component into your Android and iOS mobile applications, ensuring seamless compatibility.
 
-**Customizability:** The application is highly customizable and supports vibrant gradient transitions for backgrounds. It includes features like keyboard avoidance, safe area handling, and dynamic adaptation, especially when integrating FlatList components.
+**Customizability:** Highly customizable with support for style modifications, it includes essential features such as keyboard avoidance, safe area handling, and dynamic adaptation based on device dimensions.
 
-**Ease of Use:** Enables straightforward integration for easy usage.
+**Ease of Use:** KeyboardAvoidingView and ScrollView for smooth keyboard handling and content scrolling. Ensures a responsive and intuitive interface across various device sizes, enhancing usability and satisfaction.
 
 <h2>Usage</h2>
 

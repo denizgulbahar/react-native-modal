@@ -1,9 +1,16 @@
 import React from 'react';
-import { StyleSheet, KeyboardAvoidingView, Platform, ScrollView, View, Dimensions } from 'react-native';
+import { 
+  StyleSheet, 
+  KeyboardAvoidingView, 
+  Platform, 
+  ScrollView, 
+  Dimensions,
+} from 'react-native';
 import { Portal, Modal, IconButton } from 'react-native-paper';
 import { color } from '../../styles/color';
 
 const { width } = Dimensions.get("window")
+
 const CustomModal = ({ visible, onClose, children }) => {
   // Determine keyboard behavior based on platform
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
@@ -14,7 +21,7 @@ const CustomModal = ({ visible, onClose, children }) => {
       <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalContainer}>
         {/* KeyboardAvoidingView to handle keyboard visibility */}
         <KeyboardAvoidingView behavior={behavior} keyboardVerticalOffset={0}>
-         {/* Close Icon Button */}
+          {/* Close Icon Button */}
           <IconButton
             icon="close-circle"
             onPress={onClose}
@@ -29,14 +36,13 @@ const CustomModal = ({ visible, onClose, children }) => {
             contentContainerStyle={{ flexGrow: 1, padding: 20 }}
           >
           {/* Render children components */}
-          {children} 
+            {children} 
           </ScrollView>
         </KeyboardAvoidingView>
       </Modal>
     </Portal>
   );
 };
-
 
 const styles = StyleSheet.create({
   overlay: {
