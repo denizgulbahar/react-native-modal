@@ -33,7 +33,7 @@ const CustomModal = ({ visible, onClose, children }) => {
           {/* Responsive height depend on Device */}
           <ScrollView 
             style={{ height: width>500 ? "95%" : "90%" }} 
-            contentContainerStyle={{ flexGrow: 1, padding: 20 }}
+            contentContainerStyle={{ flexGrow: 1, padding: 10 }}
           >
           {/* Render children components */}
             {children} 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: color.white,
     borderRadius: 8,
-    margin: 20,
+    margin: width>=500 ? 15 : 5,
   },
   closeButton: {
     alignSelf: 'flex-end',
@@ -68,4 +68,3 @@ const styles = StyleSheet.create({
 });
 
 export default CustomModal;
-
