@@ -7,13 +7,16 @@ import {
   KeyboardAvoidingView, 
   SafeAreaView, 
   Platform,
-  StyleSheet 
+  StyleSheet,
+  FlatList,
+  Dimensions,
 } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
 import ButtonOriginal from './components/buttons/buttonOriginal';
 import CustomModal from './components/modal/customModal';
 import { color } from './styles/color';
 
+const { width } = Dimensions.get("window")
 export default function App() {
 
   const[ modalVisible, setModalVisible] = useState(false)
@@ -26,7 +29,7 @@ export default function App() {
     "Teslimat Ad Soyad : Furkan Özçetin", 
     "Teslimat Telefon: 0502 238 23 32", 
     "Ödeme Tipi: Kredi Kartı",
-    "Gönderici Adresi: İstiklal Caddesi, No 23, Ankara", 
+    "Gönderici Adresi: İstiklal Caddesi, No 23", 
     "Gönderici Ad Soyad : Berat Kırbayır", 
     "Teslimat Telefon: 0542 238 23 33", 
   ]
@@ -40,6 +43,13 @@ export default function App() {
     handleCloseModal()
   }
 
+  const renderItem = ({ item, index }) => (
+    <Text style={styles.userText}>
+      {item}
+    </Text>
+  )
+  const numColumns = width >= 500 ? 2 : 1;
+  
   return (
     <PaperProvider>
       {/* When the keyboard is opened, scrolled screen content smoothly */}
@@ -61,23 +71,20 @@ export default function App() {
               onPress={handleOpenModal} 
             />
             {/* Modal component displaying order details */}
-            <CustomModal visible={modalVisible} onClose={handleCloseModal} >
-              <View style={styles.content}>
-                {/* Display order details */}
-                <View style={{ flex: 1 }}>
-                  {orderData.map((item, index) => (
-                  <Text style={styles.userText} key={index}>
-                    {item}
-                  </Text>
-                  ))}
-                </View>
-                {/* Button to add products */}
-                <ButtonOriginal
-                  buttonStyle={styles.addButton}
-                  title="Ürünleri Ekle" 
-                  onPress={handleAddProduct} 
-                />
-              </View>
+            <CustomModal 
+              visible={modalVisible} 
+              onClose={handleCloseModal} 
+              onPress={handleAddProduct} 
+              title="Ürün Ekle"
+            >
+              {/* Display order details */}
+              <FlatList
+                data={orderData}
+                keyExtractor={(item, index) => `${item}${index}`}
+                contentContainerStyle={{ padding: 10 }}
+                renderItem={renderItem}
+                numColumns={numColumns}
+              />
             </CustomModal>
           </View>
         </SafeAreaView>
@@ -93,21 +100,16 @@ const styles = StyleSheet.create({
     padding: 10
   },
   userText: {
+    flex: 1,
     padding: 10,
-    fontSize: 16,
+    margin: 5,
+    fontSize: width>=500 ? 20 : 16,
     lineHeight: 24, // Using lineHeight to increase line spacing
     textAlign: "left",
     color: color.black,
   },
-  addButton: {
-    alignSelf: "flex-end", 
-    backgroundColor: color.apricot,
-    margin: 10,
-    marginTop: 20,
-    marginRight: 0,
-  },
   header: { 
-    fontSize: 32,
+    fontSize:  width>=500 ? 36 : 32,
     fontWeight: "500", 
     textAlign: "center",
     color: color.black,

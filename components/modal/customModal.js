@@ -8,10 +8,11 @@ import {
 } from 'react-native';
 import { Portal, Modal, IconButton } from 'react-native-paper';
 import { color } from '../../styles/color';
+import ButtonOriginal from '../buttons/buttonOriginal';
 
 const { width } = Dimensions.get("window")
 
-const CustomModal = ({ visible, onClose, children }) => {
+const CustomModal = ({ visible, title, onPress, onClose, children }) => {
   // Determine keyboard behavior based on platform
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
 
@@ -32,12 +33,17 @@ const CustomModal = ({ visible, onClose, children }) => {
           {/* Scrollable content inside the modal */}
           {/* Responsive height depend on Device */}
           <ScrollView 
-            style={{ height: width>500 ? "95%" : "90%" }} 
-            contentContainerStyle={{ flexGrow: 1, padding: 10 }}
+            contentContainerStyle={{ height: width>= 500 ? "95%" : "90%" ,  padding: 15 }}
           >
           {/* Render children components */}
             {children} 
+            <ButtonOriginal
+              buttonStyle={styles.addButton}
+              title={title}
+              onPress={onPress} 
+            />
           </ScrollView>
+          
         </KeyboardAvoidingView>
       </Modal>
     </Portal>
@@ -51,6 +57,11 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     paddingHorizontal: 15,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  addButton: {
+    marginVertical: 20,
+    alignSelf: "flex-end",
+    backgroundColor: color.apricot,
   },
   container: {
     flex: 1,
