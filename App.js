@@ -51,6 +51,8 @@ export default function App() {
   const numColumns = width >= 500 ? 2 : 1;
   
   return (
+    <>
+    <StatusBar style="auto" />
     <PaperProvider>
       {/* When the keyboard is opened, scrolled screen content smoothly */}
       <KeyboardAvoidingView 
@@ -61,7 +63,6 @@ export default function App() {
         {/* Prevented notches on some phones from conflicting with screen content */}
         <SafeAreaView style={{ flex: 1 }}>
           <View style={styles.container}>
-            <StatusBar style="auto" />
             {/* Application header */}
             <Text style={styles.header}>Custom Modal</Text>
             {/* Button to open modal */}
@@ -90,7 +91,7 @@ export default function App() {
         </SafeAreaView>
       </KeyboardAvoidingView>
     </PaperProvider>
-    
+    </>
   );
 }
 const styles = StyleSheet.create({
@@ -103,22 +104,17 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     margin: 5,
-    fontSize: width>=500 ? 20 : 16,
+    fontSize: width>=500 ? 20 : 16, // Responsive fontSize
     lineHeight: 24, // Using lineHeight to increase line spacing
     textAlign: "left",
     color: color.black,
   },
   header: { 
-    fontSize:  width>=500 ? 36 : 32,
+    fontSize:  width>=500 ? 36 : 32, // Responsive fontSize
     fontWeight: "500", 
     textAlign: "center",
     color: color.black,
     marginHorizontal: 10,
     marginVertical: 30,
   },
-  content: {
-    flex: 1, 
-    justifyContent: "space-between", 
-    width: "100%" 
-  }
 })
