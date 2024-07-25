@@ -51,9 +51,9 @@ export default function App() {
   const numColumns = width >= 500 ? 2 : 1;
   
   return (
-    <>
-    <StatusBar style="auto" />
     <PaperProvider>
+    {/* Optimize performance and manage theme using the theme prop */}
+      <StatusBar style="auto" />
       {/* When the keyboard is opened, scrolled screen content smoothly */}
       <KeyboardAvoidingView 
         behavior={behavior} 
@@ -91,7 +91,6 @@ export default function App() {
         </SafeAreaView>
       </KeyboardAvoidingView>
     </PaperProvider>
-    </>
   );
 }
 const styles = StyleSheet.create({
