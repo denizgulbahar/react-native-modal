@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { 
   StyleSheet, 
   KeyboardAvoidingView, 
   Platform, 
   ScrollView, 
   Dimensions,
+  Animated,
+  Easing
 } from 'react-native';
 import { Portal, Modal, IconButton } from 'react-native-paper';
 import { color } from '../../styles/color';
@@ -12,68 +14,124 @@ import ButtonOriginal from '../buttons/buttonOriginal';
 
 const { width } = Dimensions.get("window")
 
-const CustomModal = ({ visible, title, onPress, onClose, children }) => {
-  // Determine keyboard behavior based on platform
+const CustomModal = ({
+  visible, // Controls modal visibility
+  setModalVisible, // Function to toggle modal visibility
+  modalOpenTitle = "Modalı Aç", // Title for the open modal button
+  actionTitle = "Sepeti Onayla", // Title for the action button
+  onPress, // Function for action button press
+  children, // Content to render inside the modal
+  backgroundColor = color.white, // Modal background color
+  closeIconColor = color.danger, // Close icon color
+  buttonColor = color.apricot, // Action button color
+  buttonTextColor = color.white, // Action button text color
+  keyboardVerticalOffset = 0, // Vertical offset for the keyboard
+}) => {
+
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
 
+  
+  const animation = useRef(new Animated.Value(0)).current
+  // Modal Actions
+  const openModal = () => {
+    setModalVisible(true)
+    Animated.timing(animation, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true, // Use the native driver for better performance
+      easing: Easing.out(Easing.ease),  // Easing function to makes more realistic effect
+    }).start();
+  };
+
+  const closeModal = () => {
+    Animated.timing(animation, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true, // Use the native driver for better performance
+      easing: Easing.in(Easing.ease) // Easing function to makes more realistic effect
+    }).start(() => setModalVisible(false));
+  };
+  const modalStyle = {
+    ...styles.modalContainer,
+    opacity: animation,
+    transform: [{ scale: animation }], // Scale effect
+    backgroundColor: backgroundColor,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  };
+
+  function handleOnPress () {
+    onPress();
+    closeModal();
+  }
+  
   return (
-    <Portal>
-      {/* Modal component from React Native Paper */}
-      <Modal visible={visible} onDismiss={onClose} contentContainerStyle={styles.modalContainer}>
-        {/* KeyboardAvoidingView to handle keyboard visibility */}
-        <KeyboardAvoidingView behavior={behavior} keyboardVerticalOffset={0}>
-          {/* Close Icon Button */}
-          <IconButton
-            icon="close-circle"
-            onPress={onClose}
-            style={styles.closeButton}
-            iconColor={color.danger}
-            size={40}
-          />
-          {/* Scrollable content inside the modal */}
-          {/* Responsive height depend on Device */}
-          <ScrollView 
-            contentContainerStyle={{ height: width>= 500 ? "95%" : "90%" ,  padding: 15 }}
-          >
-          {/* Render children components */}
-            {children} 
-            <ButtonOriginal
-              buttonStyle={styles.addButton}
-              title={title}
-              onPress={onPress} 
-            />
-          </ScrollView>
-          
-        </KeyboardAvoidingView>
-      </Modal>
-    </Portal>
+    <>
+      {/* Button to open the modal */}
+      <ButtonOriginal 
+        buttonStyle={{ width: "80%", alignSelf: 'center' }}
+        title={modalOpenTitle} 
+        onPress={openModal} 
+      />
+       {visible && (
+        <Animated.View style={modalStyle}>
+          <Portal style={{ flex: 1 }}>
+            <Modal 
+              visible={visible} 
+              onDismiss={closeModal} 
+            >
+              <KeyboardAvoidingView 
+                behavior={behavior} 
+                keyboardVerticalOffset={keyboardVerticalOffset}
+              >
+                {/* Close button */}
+                <IconButton
+                  icon="close-circle"
+                  onPress={closeModal}
+                  style={styles.closeButton}
+                  iconColor={closeIconColor}
+                  size={40}
+                />
+                <ScrollView contentContainerStyle={styles.scrollView}>
+                  {children} 
+                  {/* Action button */}
+                  <ButtonOriginal
+                    buttonStyle={{ ...styles.addButton, backgroundColor: buttonColor }}
+                    title={actionTitle}
+                    titleStyle={{ color: buttonTextColor }}
+                    onPress={handleOnPress}
+                  />
+                </ScrollView>
+              </KeyboardAvoidingView>
+            </Modal>
+          </Portal>
+        </Animated.View>
+       )}
+    </>
   );
 };
 
+
 const styles = StyleSheet.create({
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    paddingVertical: 30,
-    paddingHorizontal: 15,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
   addButton: {
-    marginVertical: 20,
+    margin: width >= 500 ? 30 : 20,
     alignSelf: "flex-end",
-    backgroundColor: color.apricot,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 10,
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: color.white,
     borderRadius: 8,
-    margin: width>=500 ? 15 : 5,
+    margin: width >= 500 ? 20 : 15,
+  },
+  scrollView: {
+    height: "90%", 
+    padding: 15 
   },
   closeButton: {
+    marginTop: 40,
+    marginRight: width >= 500 ? 30 : 20,
     alignSelf: 'flex-end',
   },
 });

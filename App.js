@@ -12,7 +12,6 @@ import {
   Dimensions,
 } from 'react-native';
 import { PaperProvider } from 'react-native-paper';
-import ButtonOriginal from './components/buttons/buttonOriginal';
 import CustomModal from './components/modal/customModal';
 import { color } from './styles/color';
 
@@ -35,12 +34,8 @@ export default function App() {
   ]
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
 
-  const handleOpenModal = () => setModalVisible(true);
-  const handleCloseModal = () => setModalVisible(false);
-
   function handleAddProduct() {
     Alert.alert("Ürünler Eklendi")
-    handleCloseModal()
   }
 
   const renderItem = ({ item, index }) => (
@@ -65,18 +60,13 @@ export default function App() {
           <View style={styles.container}>
             {/* Application header */}
             <Text style={styles.header}>Custom Modal</Text>
-            {/* Button to open modal */}
-            <ButtonOriginal 
-              buttonStyle={{ margin: 60 }}  
-              title="Modalı Aç" 
-              onPress={handleOpenModal} 
-            />
+          
             {/* Modal component displaying order details */}
-            <CustomModal 
-              visible={modalVisible} 
-              onClose={handleCloseModal} 
+            <CustomModal
+              visible={modalVisible}
+              setModalVisible={setModalVisible}
               onPress={handleAddProduct} 
-              title="Ürün Ekle"
+              actionTitle="Ürün Ekle"
             >
               {/* Display order details */}
               <FlatList
@@ -96,6 +86,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
+    justifyContent: "center", 
     backgroundColor: "#3AA6B9", 
     padding: 10
   },
@@ -103,13 +94,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     margin: 5,
-    fontSize: width>=500 ? 20 : 16, // Responsive fontSize
+    fontSize: width >= 500 ? 20 : 16, // Responsive fontSize
     lineHeight: 24, // Using lineHeight to increase line spacing
     textAlign: "left",
     color: color.black,
   },
   header: { 
-    fontSize:  width>=500 ? 36 : 32, // Responsive fontSize
+    fontSize:  width >= 500 ? 36 : 32, // Responsive fontSize
     fontWeight: "500", 
     textAlign: "center",
     color: color.black,
