@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     padding: width >= 500 ? 20 : 10,
   },
   closeButton: {
-    marginTop: width >= 500 ? 60 : 40,
+    marginTop: width >= 500 ? 60 : 80,
     marginRight: width >= 500 ? 30 : 20,
     alignSelf: 'flex-end',
   },

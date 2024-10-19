@@ -1,14 +1,14 @@
-<h1>React Native Modal Component</h1>  
+<h1>React Native Animated Modal Component</h1>  
 
-This project provides a modal for integrating a specific component into another React Native application.
+This project provides a animated modal for integrating a specific component into another React Native application.
 
 <h2>Features</h2>
 
 **Quick Integration:** Easily integrate this component into your Android and iOS mobile applications, ensuring seamless compatibility.
 
-**Customizability:** Highly customizable with support for style modifications, it includes essential features such as keyboard avoidance, safe area handling, and dynamic adaptation based on device dimensions.
+**Customizability:** Highly customizable with support for style modifications, it includes essential features such as keyboard avoidance, safe area handling, and dynamic adaptation based on device dimensions. You can customize the background color of the modal and the color of the action button, allowing for a customized user experience. Additionally, smooth animated transitions are achieved using built-in React Native components, without the need for any additional libraries.
 
-**Ease of Use:** KeyboardAvoidingView and ScrollView for smooth keyboard handling and content scrolling. Ensures a responsive and intuitive interface across various device sizes, enhancing usability and satisfaction.
+**Ease of Use:** With built-in support for keyboard handling and content scrolling, the component ensures a responsive interface across various device sizes, enhancing overall usability and satisfaction.
 
 <h2>Usage</h2>
 
