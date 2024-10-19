@@ -6,9 +6,11 @@ import {
   ScrollView, 
   Dimensions,
   Animated,
-  Easing
+  Easing,
+  View,
+  Modal,
 } from 'react-native';
-import { Portal, Modal, IconButton } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { color } from '../../styles/color';
 import ButtonOriginal from '../buttons/buttonOriginal';
 
@@ -30,7 +32,6 @@ const CustomModal = ({
 
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
 
-  
   const animation = useRef(new Animated.Value(0)).current
   // Modal Actions
   const openModal = () => {
@@ -51,23 +52,26 @@ const CustomModal = ({
       easing: Easing.in(Easing.ease) // Easing function to makes more realistic effect
     }).start(() => setModalVisible(false));
   };
-  const modalStyle = {
-    ...styles.modalContainer,
-    opacity: animation,
-    transform: [{ scale: animation }], // Scale effect
-    backgroundColor: backgroundColor,
+  const modalBackgroundStyle = {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
+  }
+  const modalStyle = {
+    opacity: 1,
+    borderRadius: 20,
+    transform: [{ scale: animation }], // Scale effect
+    backgroundColor: backgroundColor,
+    position: 'absolute',
+    top: width >= 500 ? 20 : 15,
+    left:  width >= 500 ? 20 : 15,
+    right:  width >= 500 ? 20 : 15,
+    bottom:  width >= 500 ? 20 : 15,
   };
 
-  function handleOnPress () {
-    onPress();
-    closeModal();
-  }
-  
   return (
     <>
       {/* Button to open the modal */}
@@ -77,63 +81,59 @@ const CustomModal = ({
         onPress={openModal} 
       />
        {visible && (
-        <Animated.View style={modalStyle}>
-          <Portal style={{ flex: 1 }}>
-            <Modal 
-              visible={visible} 
-              onDismiss={closeModal} 
-            >
-              <KeyboardAvoidingView 
-                behavior={behavior} 
-                keyboardVerticalOffset={keyboardVerticalOffset}
+        <View style={modalBackgroundStyle}>
+          <Animated.View style={modalStyle}>
+              <Modal 
+                visible={visible} 
+                onDismiss={closeModal}
+                transparent={true}
               >
-                {/* Close button */}
-                <IconButton
-                  icon="close-circle"
-                  onPress={closeModal}
-                  style={styles.closeButton}
-                  iconColor={closeIconColor}
-                  size={40}
-                />
-                <ScrollView contentContainerStyle={styles.scrollView}>
-                  {children} 
-                  {/* Action button */}
-                  <ButtonOriginal
-                    buttonStyle={{ ...styles.addButton, backgroundColor: buttonColor }}
-                    title={actionTitle}
-                    titleStyle={{ color: buttonTextColor }}
-                    onPress={handleOnPress}
+                <KeyboardAvoidingView 
+                  behavior={behavior} 
+                  keyboardVerticalOffset={keyboardVerticalOffset}
+                >
+                  {/* Close button */}
+                  <IconButton
+                    icon="close-circle"
+                    onPress={closeModal}
+                    style={styles.closeButton}
+                    iconColor={closeIconColor}
+                    size={width >= 500 ? 40 : 35}
                   />
-                </ScrollView>
-              </KeyboardAvoidingView>
-            </Modal>
-          </Portal>
-        </Animated.View>
+                  <ScrollView contentContainerStyle={styles.scrollView}>
+                    {children} 
+                    {/* Action button */}
+                    <ButtonOriginal
+                      buttonStyle={{ ...styles.addButton, backgroundColor: buttonColor }}
+                      title={actionTitle}
+                      titleStyle={{ color: buttonTextColor }}
+                      onPress={() => onPress(closeModal)}
+                    />
+                  </ScrollView>
+                </KeyboardAvoidingView>
+              </Modal>
+          </Animated.View>
+        </View>
        )}
     </>
   );
 };
-
 
 const styles = StyleSheet.create({
   addButton: {
     margin: width >= 500 ? 30 : 20,
     alignSelf: "flex-end",
   },
-  modalContainer: {
-    flex: 1,
-    borderRadius: 8,
-    margin: width >= 500 ? 20 : 15,
-  },
   scrollView: {
     height: "90%", 
-    padding: 15 
+    padding: width >= 500 ? 20 : 10,
   },
   closeButton: {
-    marginTop: 40,
+    marginTop: width >= 500 ? 60 : 40,
     marginRight: width >= 500 ? 30 : 20,
     alignSelf: 'flex-end',
   },
 });
 
 export default CustomModal;
+

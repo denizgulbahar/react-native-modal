@@ -34,10 +34,14 @@ export default function App() {
   ]
   const behavior = Platform.OS === 'ios' ? 'padding' : 'height';
 
-  function handleAddProduct() {
-    Alert.alert("Ürünler Eklendi")
+  function handleAddProduct(closeModal) {
+    Alert.alert("", "Ürünler Eklendi",[
+      {
+        text: "OK",
+        onPress: () => closeModal()
+      }
+    ])
   }
-
   const renderItem = ({ item, index }) => (
     <Text style={styles.userText}>
       {item}
