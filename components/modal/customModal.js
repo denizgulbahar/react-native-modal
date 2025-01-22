@@ -80,40 +80,40 @@ const CustomModal = ({
         title={modalOpenTitle} 
         onPress={openModal} 
       />
-       {visible && (
-        <View style={modalBackgroundStyle}>
-          <Animated.View style={modalStyle}>
-              <Modal 
-                visible={visible} 
-                onDismiss={closeModal}
-                transparent={true}
-              >
-                <KeyboardAvoidingView 
-                  behavior={behavior} 
-                  keyboardVerticalOffset={keyboardVerticalOffset}
-                >
-                  {/* Close button */}
-                  <IconButton
-                    icon="close-circle"
-                    onPress={closeModal}
-                    style={styles.closeButton}
-                    iconColor={closeIconColor}
-                    size={width >= 500 ? 40 : 35}
-                  />
-                  <ScrollView contentContainerStyle={styles.scrollView}>
-                    {children} 
-                    {/* Action button */}
-                    <ButtonOriginal
-                      buttonStyle={{ ...styles.addButton, backgroundColor: buttonColor }}
-                      title={actionTitle}
-                      titleStyle={{ color: buttonTextColor }}
-                      onPress={() => onPress(closeModal)}
-                    />
-                  </ScrollView>
-                </KeyboardAvoidingView>
-              </Modal>
-          </Animated.View>
-        </View>
+      {visible && (
+      <View style={modalBackgroundStyle}>
+        <Animated.View style={modalStyle}>
+          <Modal 
+            visible={visible} 
+            onDismiss={closeModal}
+            transparent={true}
+          >
+            <KeyboardAvoidingView 
+              behavior={behavior} 
+              keyboardVerticalOffset={keyboardVerticalOffset}
+            >
+              {/* Close button */}
+              <IconButton
+                icon="close-circle"
+                onPress={closeModal}
+                style={styles.closeButton}
+                iconColor={closeIconColor}
+                size={width >= 500 ? 40 : 35}
+              />
+              <ScrollView contentContainerStyle={styles.scrollView}>
+                {children} 
+                {/* Action button */}
+                <ButtonOriginal
+                  buttonStyle={{ ...styles.addButton, backgroundColor: buttonColor }}
+                  title={actionTitle}
+                  titleStyle={{ color: buttonTextColor }}
+                  onPress={() => onPress(closeModal)}
+                />
+              </ScrollView>
+            </KeyboardAvoidingView>
+          </Modal>
+        </Animated.View>
+      </View>
        )}
     </>
   );

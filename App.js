@@ -74,6 +74,7 @@ export default function App() {
             >
               {/* Display order details */}
               <FlatList
+                scrollEnabled={false}
                 data={orderData}
                 keyExtractor={(item, index) => `${item}${index}`}
                 contentContainerStyle={{ padding: 10 }}
