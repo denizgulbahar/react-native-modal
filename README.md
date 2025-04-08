@@ -2,6 +2,10 @@
 
 This project provides a animated modal for integrating a specific component into another React Native application.
 
+<h2>Presentation</h2>
+
+![modal Video](https://github.com/user-attachments/assets/cd585a45-2b19-4489-b91e-98eff7b7bdfb)
+
 <h2>Features</h2>
 
 **Quick Integration:** Easily integrate this component into your Android and iOS mobile applications, ensuring seamless compatibility.
