@@ -40,7 +40,7 @@ const CustomModal = ({
       toValue: 1,
       duration: 200,
       useNativeDriver: true, // Use the native driver for better performance
-      easing: Easing.out(Easing.ease),  // Easing function to makes more realistic effect
+      easing: Easing.in(Easing.ease),  // Easing function to makes more realistic effect
     }).start();
   };
 
@@ -49,7 +49,7 @@ const CustomModal = ({
       toValue: 0,
       duration: 200,
       useNativeDriver: true, // Use the native driver for better performance
-      easing: Easing.in(Easing.ease) // Easing function to makes more realistic effect
+      easing: Easing.out(Easing.ease) // Easing function to makes more realistic effect
     }).start(() => setModalVisible(false));
   };
   const modalBackgroundStyle = {
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     height: "90%", 
-    padding: width >= 500 ? 20 : 10,
+    paddingBottom: 20,
+    paddingHorizontal: width >= 500 ? 20 : 10,
   },
   closeButton: {
     marginTop: width >= 500 ? 60 : 80,
