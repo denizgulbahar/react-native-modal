@@ -55,6 +55,7 @@ const CustomModal = ({
   const modalBackgroundStyle = {
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     position: 'absolute',
+    zIndex: visible ? 1 : -1, // // Keep the background modal behind the active modal
     top: 0,
     left: 0,
     right: 0,
@@ -66,6 +67,7 @@ const CustomModal = ({
     transform: [{ scale: animation }], // Scale effect
     backgroundColor: backgroundColor,
     position: 'absolute',
+    zIndex: visible ? 2 : -1, // Keep the z-index higher when the modal is open
     top: width >= 500 ? 20 : 15,
     left:  width >= 500 ? 20 : 15,
     right:  width >= 500 ? 20 : 15,
@@ -76,7 +78,7 @@ const CustomModal = ({
     <>
       {/* Button to open the modal */}
       <ButtonOriginal 
-        buttonStyle={{ width: "80%", alignSelf: 'center' }}
+        buttonStyle={{ width: "80%", alignSelf: 'center', marginVertical: 20 }}
         title={modalOpenTitle} 
         onPress={openModal} 
       />

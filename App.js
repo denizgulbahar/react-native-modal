@@ -19,6 +19,8 @@ const { width } = Dimensions.get("window")
 export default function App() {
 
   const[ modalVisible, setModalVisible] = useState(false)
+  const[ modalVisible2, setModalVisible2] = useState(false)
+  const[ modalVisible3, setModalVisible3] = useState(false)
   const orderData = [ 
     "Sipariş Numarası: 2131232131", 
     "Sipariş Tarihi: 01.07.2024", 
@@ -36,6 +38,22 @@ export default function App() {
 
   function handleAddProduct(closeModal) {
     Alert.alert("", "Ürünler Eklendi",[
+      {
+        text: "OK",
+        onPress: () => closeModal()
+      }
+    ])
+  }
+  function handleSaveProduct(closeModal) {
+    Alert.alert("", "Değişiklikler kaydedildi",[
+      {
+        text: "OK",
+        onPress: () => closeModal()
+      }
+    ])
+  }
+  function handleSubmitProduct(closeModal) {
+    Alert.alert("", "Sepet Onaylandı",[
       {
         text: "OK",
         onPress: () => closeModal()
@@ -70,7 +88,43 @@ export default function App() {
               visible={modalVisible}
               setModalVisible={setModalVisible}
               onPress={handleAddProduct} 
-              actionTitle="Ürün Ekle"
+              modalOpenTitle = "İlk Modalı Aç"
+              actionTitle = "Sepete Ekle"
+            >
+              {/* Display order details */}
+              <FlatList
+                scrollEnabled={false}
+                data={orderData}
+                keyExtractor={(item, index) => `${item}${index}`}
+                contentContainerStyle={{ padding: 10 }}
+                renderItem={renderItem}
+                numColumns={numColumns}
+              />
+            </CustomModal>
+            <CustomModal
+              visible={modalVisible2}
+              setModalVisible={setModalVisible2}
+              onPress={handleSaveProduct} 
+              backgroundColor={color.green}
+              modalOpenTitle = "İkinci Modalı Aç"
+              actionTitle = "Sepeti Kaydet"
+            >
+              {/* Display order details */}
+              <FlatList
+                scrollEnabled={false}
+                data={orderData}
+                keyExtractor={(item, index) => `${item}${index}`}
+                contentContainerStyle={{ padding: 10 }}
+                renderItem={renderItem}
+                numColumns={numColumns}
+              />
+            </CustomModal>
+            <CustomModal
+              visible={modalVisible3}
+              setModalVisible={setModalVisible3}
+              onPress={handleSubmitProduct} 
+              backgroundColor={color.blue}
+              modalOpenTitle = "Son Modalı Aç"
             >
               {/* Display order details */}
               <FlatList
@@ -91,9 +145,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    justifyContent: "center", 
     backgroundColor: "#3AA6B9", 
-    padding: 10
+    paddingVertical: 100,
   },
   userText: {
     flex: 1,
@@ -110,6 +163,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: color.black,
     marginHorizontal: 10,
-    marginVertical: 30,
+    marginBottom: 40,
   },
 })
